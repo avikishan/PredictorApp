@@ -18,7 +18,7 @@ router.post("/score",async(req,res) => {
     
 
     const {Total_Stops,Journy_Day,Journy_Month,Dep_hour,Dep_min,Arrival_hour,Arrival_min,Duration_hours,Duration_mins,Airline,Source,Destination}=req.body;
-    //console.log(Total_Stops,Journy_Day,Journy_Month,Dep_hour,Dep_min,Arrival_hour,Arrival_min,Duration_hours,Duration_mins,Airline,Source,Destination);
+    console.log(Total_Stops,Journy_Day,Journy_Month,Dep_hour,Dep_min,Arrival_hour,Arrival_min,Duration_hours,Duration_mins,Airline,Source,Destination);
 
     //populate template
     const template=[0,
