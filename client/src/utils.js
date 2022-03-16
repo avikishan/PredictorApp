@@ -1,0 +1,12 @@
+export const Total_Stops=[0,1,2,3,4];
+export const Journy_Day=Array.from({length: 31}, (_, i) => i + 1);
+export const Journy_Month=Array.from({length: 12}, (_, i) => i + 1);
+export const Dep_hour=Array.from({length: 24}, (_, i) => i);
+export const Dep_min=Array.from({length: 60}, (_, i) => i);
+export const Arrival_hour=Array.from({length: 24}, (_, i) => i);
+export const Arrival_min=Array.from({length: 60}, (_, i) => i);
+export const Duration_hours=Array.from({length: 24}, (_, i) => i);
+export const Duration_mins=Array.from({length: 60}, (_, i) => i);
+export const Airline=["Air Asia","Air India","GoAir","IndiGo","Jet Airways","Jet Airways Business","Multiple carriers","Multiple carriers Premium economy","SpiceJet","Trujet","Vistara","Vistara Premium economy"];
+export const Source=["Banglore","Chennai","Delhi","Kolkata","Mumbai"];
+export const Destination=["Banglore","Cochin","Delhi","Hyderabad","Kolkata","New Delhi"];
