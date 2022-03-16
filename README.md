@@ -18,5 +18,4 @@ You will need
 ***
 ## Architecture
 
-
-
+![Architecture](https://user-images.githubusercontent.com/47806351/158678449-f768b14a-670b-4ce1-886e-daee42e51323.jpg)
