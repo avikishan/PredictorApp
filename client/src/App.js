@@ -9,11 +9,9 @@ import {
   Button,
   Loading,
   DatePicker,
-  DatePickerInput,
-  TimePicker,
-  TimePickerSelect
+  DatePickerInput
 } from "carbon-components-react";
-import {Total_Stops,Journy_Day,Journy_Month,Dep_hour,Dep_min,Arrival_hour,Arrival_min,Duration_hours,Duration_mins,Airline,Source,Destination} from "./utils";
+import {Total_Stops,Dep_hour,Dep_min,Arrival_hour,Arrival_min,Duration_hours,Duration_mins,Airline,Source,Destination} from "./utils";
 import BarChart from "./components/dataviz/BarChart";
 
 
