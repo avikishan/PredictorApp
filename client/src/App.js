@@ -65,11 +65,11 @@ function App() {
   console.log(prediction,scores);
   }
 
-  const [time,setTime]=useState("00:00");
+  // const [time,setTime]=useState("00:00");
   
-  const runShow=async (time) => {
-    console.log(time)
-  };
+  // const runShow=async (time) => {
+  //   console.log(time)
+  // };
 
   return (
     <div className="App">
@@ -174,13 +174,13 @@ function App() {
             </Select>
           </FormGroup>
           <Button onClick={e=>runPred(stop,journeyDate,depHour,depMin,arrivalHour,arrivalMin,durationHours,durationMin,airline,source,destination)}>Predict</Button>
-          <TimePicker id="time-picker" labelText="Time Picker" value={time} onChange={(e)=>setTime(e.target.traget.value)} >
+          {/* <TimePicker id="time-picker" labelText="Time Picker" value={time} onChange={(e)=>setTime(e.target.traget.value)} >
             <TimePickerSelect id="time-picker-select-1" labelText="Time Picker" >
                <SelectItem value="AM" text="AM" />
                <SelectItem value="PM" text="PM" />
               </TimePickerSelect>
             </TimePicker>
-          <Button onChange={time=> runShow(time)}>Show</Button>
+          <Button onChange={time=> runShow(time)}>Show</Button> */}
           
         </Form>
         
