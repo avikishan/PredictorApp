@@ -8,6 +8,10 @@ import {
   SelectItem,
   Button,
   Loading,
+  DatePicker,
+  DatePickerInput,
+  TimePicker,
+  TimePickerSelect
 } from "carbon-components-react";
 import {Total_Stops,Journy_Day,Journy_Month,Dep_hour,Dep_min,Arrival_hour,Arrival_min,Duration_hours,Duration_mins,Airline,Source,Destination} from "./utils";
 import BarChart from "./components/dataviz/BarChart";
@@ -16,8 +20,9 @@ import BarChart from "./components/dataviz/BarChart";
 function App() {
 
   const [stop,setStops]=useState(0);
-  const [journeyDay,setJourneyDay]=useState(1);
-  const [journeyMonth,setJourneyMonth]=useState(1);
+  // const [journeyDay,setJourneyDay]=useState(1);
+  // const [journeyMonth,setJourneyMonth]=useState(1);
+  const [journeyDate,setJourneyDate]=useState(null);
   const [depHour,setDepHour]=useState(0);
   const [depMin,setDepMin]=useState(0);
   const [arrivalHour,setArrivalHour]=useState(0);
@@ -30,13 +35,13 @@ function App() {
   const [prediction,setPrediction]=useState();
   const [scores,setScores]=useState([]);
 
-  const runPred=async (stop,journeyDay,journeyMonth,depHour,depMin,arrivalHour,arrivalMin,durationHours,durationMin,airline,source,destination) =>{
+  const runPred=async (stop,journeyDate,depHour,depMin,arrivalHour,arrivalMin,durationHours,durationMin,airline,source,destination) =>{
     //console.log(stop,journeyDay,journeyMonth,depHour,depMin,arrivalHour,arrivalMin,durationHours,durationMin,airline,source,destination);
     setPrediction("Scoring");
     const res=await axios.post("api/azureml/score", {
       "Total_Stops":parseInt(stop),
-      "Journy_Day":parseInt(journeyDay), 
-      "Journy_Month":parseInt(journeyMonth),
+      "Journy_Day":parseInt(journeyDate[0].getDate()), 
+      "Journy_Month":parseInt(journeyDate[0].getMonth()+1),
       "Dep_hour":parseInt(depHour),
       "Dep_min":parseInt(depMin), 
       "Arrival_hour":parseInt(arrivalHour),
@@ -51,7 +56,7 @@ function App() {
   setScores([
     ...scores,
     {
-      group:stop.toString()+journeyDay.toString()+journeyMonth.toString()+airline+source+destination,
+      group:stop.toString()+journeyDate[0].getDate().toString()+(journeyDate[0].getMonth()+1).toString()+airline+source+destination,
       value:res.data.data[0]
     },
   ]);
@@ -60,9 +65,19 @@ function App() {
   console.log(prediction,scores);
   }
 
+  const [time,setTime]=useState("00:00");
+  
+  const runShow=async (time) => {
+    console.log(time)
+  };
+
   return (
     <div className="App">
+      
       <div className="mainContainer">
+        <div className="mainHeading">
+          <h1>Air Flight Fare Prediction</h1>
+        </div>
         <Form>
           <FormGroup>
             <Select id="select-0" labelText="Select # of Stops" onChange={(e)=>setStops(e.target.value)}>
@@ -72,6 +87,16 @@ function App() {
             </Select>
           </FormGroup>
           <FormGroup>
+            <DatePicker
+              id="select-1-2"
+              dateFormat="d/m/Y"
+              datePickerType="single"
+              value={journeyDate} onChange={(e) => setJourneyDate(e)}>
+              <DatePickerInput id="select-12" labelText="Select Journey Date" placeholder="dd/mm/yyyy" />
+            </DatePicker>
+            {/* <Button onClick={e=> runShow(journeyDate)}>Show</Button> */}
+          </FormGroup>
+          {/* <FormGroup>
             <Select id="select-1" labelText="Select Journey Day" onChange={(e)=>setJourneyDay(e.target.value)}>
               {Journy_Day.map((day)=>(
                 <SelectItem text={day} value={day}/>
@@ -84,7 +109,7 @@ function App() {
                 <SelectItem text={month} value={month}/>
               ))}
             </Select>
-          </FormGroup>
+          </FormGroup> */}
           <FormGroup>
             <Select id="select-3" labelText="Select Departure Hour" onChange={(e) => setDepHour(e.target.value)}>
               {Dep_hour.map((hour)=>(
@@ -142,15 +167,23 @@ function App() {
             </Select>
           </FormGroup>
           <FormGroup>
-            <Select id="select-11" labelText="Select Destination" onChange={(e) => setDestination(e.target.value)}>
+          <Select id="select-11" labelText="Select Destination" onChange={(e) => setDestination(e.target.value)}>
               {Destination.map((dest)=>(
                 <SelectItem text={dest} value={dest}/>
               ))}
             </Select>
           </FormGroup>
-          <Button onClick={e=>runPred(stop,journeyDay,journeyMonth,depHour,depMin,arrivalHour,arrivalMin,durationHours,durationMin,airline,source,destination)}>Predict</Button>
+          <Button onClick={e=>runPred(stop,journeyDate,depHour,depMin,arrivalHour,arrivalMin,durationHours,durationMin,airline,source,destination)}>Predict</Button>
+          <TimePicker id="time-picker" labelText="Time Picker" value={time} onChange={(e)=>setTime(e.target.traget.value)} >
+            <TimePickerSelect id="time-picker-select-1" labelText="Time Picker" >
+               <SelectItem value="AM" text="AM" />
+               <SelectItem value="PM" text="PM" />
+              </TimePickerSelect>
+            </TimePicker>
+          <Button onChange={time=> runShow(time)}>Show</Button>
+          
         </Form>
-
+        
         <div className="predictionContainer">
           {prediction !== "Scoring"&& prediction ?
           "The model Predicted":""}
